@@ -1,0 +1,58 @@
+<beast version='2.0' namespace='master:master.model:master.steppers:master.conditions:master.postprocessors:master.outputs'>
+<!--
+  <run spec='InheritanceTrajectory'
+       samplePopulationSizes="true">
+
+         nSamples="100"
+-->
+ <run spec='InheritanceEnsemble'
+         nTraj="10"
+         samplePopulationSizes="true"
+         seed="1111">
+
+    <model spec='Model' id='model'>
+      <population spec='Population' id='S' populationName='S'/>
+      <population spec='Population' id='I' populationName='I'/>
+      <population spec='Population' id='R' populationName='R'/>
+      
+      <reaction spec='Reaction' reactionName="Infection" rate="0.0005">
+	S + I -> 2I
+      </reaction>
+      <reaction spec='Reaction' reactionName="Recovery" rate="0.2">
+	I -> R
+      </reaction>
+    </model>
+    
+    <postSimCondition spec='LeafCountPostSimCondition'
+                      nLeaves="100"
+                      exact="false"
+                      exceedCondition="true">
+        <!-- Zero or more population elements -->
+    </postSimCondition>
+    
+    <initialState spec='InitState'>
+      <populationSize spec='PopulationSize' population='@S' size='1999'/>
+      <lineageSeed spec='Individual' population='@I'/>
+    </initialState>
+
+    <!-- Simulation will terminate when no lineages remain -->
+    <lineageEndCondition spec='LineageEndCondition' nLineages="0"/>
+    
+    <output spec='NewickOutput' fileName='sir0.nwk'/>
+    <output spec='NexusOutput' fileName='sir0.nexus'/>
+    <output spec='JsonOutput' fileName='sir0.json' />
+  </run>
+</beast>
+
+<!--
+ <run spec='InheritanceEnsemble'
+         nTraj="INTEGER"
+         simulationTime="DOUBLE"
+         samplePopulationSizes="BOOLEAN"
+         nSamples="INTEGER"
+         sampleAtNodesOnly="BOOLEAN"
+         seed="INTEGER"
+         recordTrajLogP="BOOLEAN"
+         maxConditionRejects="INTEGER"
+         verbosity="INTEGER">
+-->

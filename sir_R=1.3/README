@@ -1,0 +1,3 @@
+sir1.xml Simulates data using the MASTER package in BEAST2
+t1.R fits skygrowth and BNPR models under with different sample sizes 
+a1..R analyses output and makes figures
